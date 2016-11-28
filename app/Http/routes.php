@@ -118,3 +118,10 @@ Route::group(['prefix'=>'admin','namespace'=>'Admin' ,'middleware'=>['web','admi
 
     Route::get('index','IndexController@index');
 });
+
+
+//====视图
+//Route::get('/view',function(){
+//    return view('my_laravel');
+//});
+Route::get('view','ViewController@index');

@@ -4,6 +4,11 @@ namespace App\Http\Middleware;
 
 use Closure;
 
+/**
+ * Class AdminLogin
+ * @package App\Http\Middleware
+ * anthor:liuzp111
+ */
 class AdminLogin
 {
     /**
@@ -17,6 +22,9 @@ class AdminLogin
     {
 //        echo session('key');
 //        echo 12;
+        if(!session('admin')){
+            return redirect('admin/login');
+        }
         return $next($request);
     }
 }
