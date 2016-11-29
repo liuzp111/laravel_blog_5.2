@@ -125,3 +125,6 @@ Route::group(['prefix'=>'admin','namespace'=>'Admin' ,'middleware'=>['web','admi
 //    return view('my_laravel');
 //});
 Route::get('view','ViewController@index');
+Route::get('view_learn','ViewController@view');
+Route::get('article','ViewController@article');
+Route::get('layouts','ViewController@layouts');

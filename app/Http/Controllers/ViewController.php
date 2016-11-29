@@ -18,8 +18,28 @@ class ViewController extends Controller
            'age' => 26
        ];
 
-       $title = "laravel课程";
+//       $title = "laravel课程";
+       $title = "<script>alert(1)</script>";
        return view('my_laravel',compact('data','title'));
 //       return view('my_laravel')->with('name',$name)->with('age',$age);
    }
+   public function view()
+   {
+       $score = 45;
+       $data = [
+           'score' => [
+               50,79,90,43
+           ],
+       ];
+       return view('view_learn',compact('data','score'));
+   }
+
+    public function article()
+    {
+        return view('article');
+    }
+    public function layouts()
+    {
+        return view('layouts');
+    }
 }

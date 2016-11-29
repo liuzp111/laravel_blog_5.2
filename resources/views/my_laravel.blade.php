@@ -40,7 +40,7 @@
             <div class="content">
                 <div class="title"><?=$data['name'];?></div>
                 <div class="title"><?=$data['age'];?></div>
-                <div class="title"><?=$title;?></div>
+                <div class="title">{!!isset($title) ? $title :'default'!!}</div>
             </div>
         </div>
     </body>
