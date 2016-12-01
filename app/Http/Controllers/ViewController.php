@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\DB;
 
+use App\Http\Model\Users;
 class ViewController extends Controller
 {
 
@@ -36,10 +38,26 @@ class ViewController extends Controller
 
     public function article()
     {
+        $db = DB::connection()->getPdo();
+        //dd($db);
+//        $uses_list = DB::table('users')->get();
+        $uses_list = DB::table('users')->where('user_id',2)->get();
+        dd($uses_list);
         return view('article');
     }
     public function layouts()
     {
+        //echo config('database.connections.mysql.prefix');
+        $db = DB::connection()->getPdo();
+//        dd($db);
+        $users = DB::table('users')->where('user_id',1)->get();
+//        dd($users);
+        $user = Users::find(1);
+//        dd($users);
+        $user->user_name = 'wangwu';
+        $user->update();
+
+        dd($user);
         return view('layouts');
     }
 }

@@ -16,24 +16,24 @@
 //});
 //普通get路由
 //http://127.0.0.1/laravel/public/basic1
-Route::get('basic1', function () {
-    return 'hello world';
-});
+//Route::get('basic1', function () {
+//    return 'hello world';
+//});
 //普通post路由
 
-Route::post('basic1', function () {
-    return 'hello world';
-});
+//Route::post('basic1', function () {
+//    return 'hello world';
+//});
 //多请求路由，接收post和get
 //http://127.0.0.1/laravel/public/multy1
-Route::match(['get','post'],'multy1', function () {
-    return 'hello world multy1';
-});
+//Route::match(['get','post'],'multy1', function () {
+//    return 'hello world multy1';
+//});
 //多请求路由
 //http://127.0.0.1/laravel/public/multy2
-Route::any('multy2', function () {
-    return 'hello world multy2';
-});
+//Route::any('multy2', function () {
+//    return 'hello world multy2';
+//});
 //路由参数
 //Route::get('user/{id}', function ($id) {
 //    return 'user-'.$id;
@@ -78,9 +78,9 @@ Route::any('multy2', function () {
 
 //参数绑定
 //http://127.0.0.1/laravel/public/member/1
-Route::any('member/{id}', [
-    'uses'=>'MemberController@info'
-])->where('id', '[0-9]+');
+//Route::any('member/{id}', [
+//    'uses'=>'MemberController@info'
+//])->where('id', '[0-9]+');
 
 
 /*
@@ -94,37 +94,66 @@ Route::any('member/{id}', [
 |
 */
 
-Route::group(['middleware' => ['web','admin.login']], function () {
-    Route::get('/', function () {
-        return view('welcome');
-    });
-});
+//Route::group(['middleware' => ['web','admin.login']], function () {
+//    Route::get('/', function () {
+//        return view('welcome');
+//    });
+//});
 
 //中间件web
-Route::group(['middleware'=>'web'],function(){
-    Route::get('admin/login','Admin\IndexController@login');
-    Route::get('/',function(){
-        session(['key'=>'456']);
-        return view('welcome');
-    });
-    Route::get('/test',function(){
-        echo  session('key');
-        return view('welcome');
-    });
-});
+//Route::group(['middleware'=>'web'],function(){
+//    Route::get('admin/login','Admin\IndexController@login');
+//    Route::get('/',function(){
+//        session(['key'=>'456']);
+//        return view('welcome');
+//    });
+//    Route::get('/test',function(){
+//        echo  session('key');
+//        return view('welcome');
+//    });
+//});
 //前缀，命名空间，组。中间件
 //Route::group(['prefix' =>'admin','namespace'=>'Admin','middleware'=>['web','admin.login']], function () {
-Route::group(['prefix'=>'admin','namespace'=>'Admin' ,'middleware'=>['web','admin.login']],function(){
-
-    Route::get('index','IndexController@index');
-});
+//Route::group(['prefix'=>'admin','namespace'=>'Admin' ,'middleware'=>['web','admin.login']],function(){
+//
+//    Route::get('index','IndexController@index');
+//});
 
 
 //====视图
 //Route::get('/view',function(){
 //    return view('my_laravel');
 //});
-Route::get('view','ViewController@index');
-Route::get('view_learn','ViewController@view');
-Route::get('article','ViewController@article');
-Route::get('layouts','ViewController@layouts');
+//Route::get('view','ViewController@index');
+//Route::get('view_learn','ViewController@view');
+//Route::get('article','ViewController@article');
+//Route::get('layouts','ViewController@layouts');
+
+
+//==========================================
+//blog
+//http://127.0.0.1/laravel/index.php/admin/login
+//Route::any('admin/login','Admin\LoginController@login');//这里需要接受post传参，所以必须用混合路由，不用get,否则会报错
+//Route::get('admin/vcode','Admin\LoginController@vcode');
+//Route::get('admin/getVcode','Admin\LoginController@getVcode');
+//Route::get('admin/enCrypt','Admin\LoginController@enCrypt');
+//Route::get('admin/deCrypt','Admin\LoginController@deCrypt');
+
+Route::group(['middleware' => ['web']], function () {
+
+    Route::get('/', function () {
+        return view('welcome');
+    });
+    //路由要放中间件里面，否则会生成不了session,各种奇葩问题，卧槽
+    Route::any('admin/crypt', 'Admin\LoginController@crypt');
+    Route::any('admin/login','Admin\LoginController@login');//这里需要接受post传参，所以必须用混合路由，不用get,否则会报错
+    Route::get('admin/vcode','Admin\LoginController@vcode');
+
+});
+//===设置中间件登陆验证，没有session跳转到login界面
+Route::group(['middleware' => ['web','admin.login'],'prefix'=>'admin','namespace'=>'Admin'], function () {
+    Route::any('index','IndexController@index');
+    Route::any('info','IndexController@info');
+    Route::any('quit','IndexController@quit');
+    Route::any('pass','IndexController@pass');
+});
