@@ -156,4 +156,9 @@ Route::group(['middleware' => ['web','admin.login'],'prefix'=>'admin','namespace
     Route::any('info','IndexController@info');
     Route::any('quit','IndexController@quit');
     Route::any('pass','IndexController@pass');
+    Route::resource('category', 'CategoryController');
+    Route::resource('article', 'ArticleController');//php artisan route:list  查看路由列表
+    Route::post('cate/changeSort','CategoryController@changeSort');
+    Route::any('upload','CommonController@uploadFile');
+//    Route::get('addCate','CategoryController@addCate');
 });

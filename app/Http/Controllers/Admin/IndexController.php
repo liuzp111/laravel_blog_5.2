@@ -67,7 +67,8 @@ class IndexController extends CommonController
                 if($input['password_o'] == $_password){
                     $user-> password = Crypt::encrypt($input['password']);
                     $user->update();
-                    return redirect('admin/info');
+                    return back() ->with('errors','密码修改成功！');
+                    //return redirect('admin/info');
                 }else{
                     return back() ->with('errors','原密码错误！');
                 }
